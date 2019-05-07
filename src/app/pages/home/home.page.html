@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color='primary' style="text-align:center">
+    <ion-title>
+      计科一班随机点名器
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>关于点名器：</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <div>
+        <p>这是一个简单的随机点名器，班级名单已经导入到数据库，在下方输入要需要的人数即可点名！</p>
+        <br>
+        <p>数据库已导入人数：{{max}}</p>
+      </div>
+
+      <form #submitForm="ngForm" novalidate>
+        <div>
+        <ion-item>
+          <ion-label position="floating">人数：</ion-label>
+          <ion-input  [(ngModel)]="count" name="count" type="text" #Count="ngModel" required></ion-input>
+          <ion-text color="danger">
+            <p [hidden]="Count.valid || submitted == false" padding-left>
+              输入不能为空！
+            </p>
+          </ion-text>
+          <ion-text color="danger">
+            <p [hidden]="(count != null && count > 0 && count <= max && submitted == true) || submitted == false" padding-left>
+              内容非法！
+            </p>
+          </ion-text>
+        </ion-item>
+        <ion-button color="primary" expand="full" type="submit" (click)="submit(submitForm)">点名！</ion-button>
+      </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngFor="let student of results">
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              姓名：{{student.name}}
+            </ion-col>
+            <ion-col>
+              学号：{{student.stunumber}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
